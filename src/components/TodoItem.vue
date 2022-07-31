@@ -1,31 +1,35 @@
 <template>
-  <div class="hello">
-
-  </div>
+  <li class="todoItem">
+    <button 
+      class="todoItem__btn" 
+      v-bind:class="done ? 'btn-success' : 'btn-secondary'"
+    >
+    {{this.done ? "completed" : "in order"}}
+    </button>
+    <span class="task-number" v-text="text"></span>
+  </li>
 </template>
 
 <script>
+
 export default {
-  name: 'TodoItem'
+  props: {
+    id: Number,
+    text: String,
+    done: Boolean,
+  },
 }
 </script>
 
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
 li {
-  display: inline-block;
   margin: 0 10px;
 }
 
-a {
-  color: #42b983;
+.todoItem__btn {
+  margin: 10px;
+  border: 0;
+  border-radius: 3px;
+  padding: 10px;
 }
 </style>
