@@ -1,20 +1,44 @@
 <template>
   <div id="app">
-    {{message}}
+    {{ message }}
     <ul class="todo-btns">
-      <TodoItem
-        v-for="todo in todoItems"
-        v-bind:key="todo.id"
-        v-bind:id="todo.id"
+      <TodoItem 
+        v-for="todo in todoItems" 
+        v-bind:key="todo.id" 
+        v-bind:id="todo.id" 
         v-bind:text="todo.text"
         v-bind:done="todo.done"
       ></TodoItem>
     </ul>
+
+    <!-- <FormAdd
+      v-bind:todoItems="todoItems"
+    ></FormAdd> -->
+    <form class="form-add" 
+      v-on:submit.prevent
+    >
+        <input 
+        type="text" 
+        class="form-add__input"
+        v-model.trim="addTaskText" 
+        placeholder="Add new task"
+      >
+
+      <button 
+        type="submit" 
+        v-bind:disabled="addTaskText==''"
+        class="form-add__btn" 
+        v-on:click="addTask"
+      >
+        Add
+      </button>
+    </form>
   </div>
 </template>
 
 <script>
-import TodoItem from './components/TodoItem.vue'
+import TodoItem from './components/TodoItem.vue';
+// import FormAdd from './components/FormAdd.vue';
 
 export default {
   name: 'App',
@@ -28,11 +52,22 @@ export default {
         { id: 4, text: 'task 4', done: false },
         { id: 5, text: 'task 5', done: false },
       ],
+      addTaskText: ""
+    }
+  },
+  methods: {
+    addTask() {
+      this.todoItems.push({
+        id: this.todoItems.length + 1,
+        text: this.addTaskText,
+        done: false
+      });
     }
   },
   components: {
-    TodoItem
-}
+    TodoItem,
+    // FormAdd
+  }
 }
 </script>
 
@@ -47,5 +82,9 @@ export default {
 
 .todo-btns {
   padding: 0;
+}
+
+.form-add__input {
+  margin-left: 20px;
 }
 </style>
