@@ -7,6 +7,7 @@
       v-bind:allTask="allTask"
       v-bind:percentComplete="percentComplete"
     ></StatisticTasks>
+    <SelectTask></SelectTask>
     <SearchTask
       v-bind:todoItems="todoItems"
     ></SearchTask>
@@ -49,6 +50,9 @@
 import TodoItem from './components/TodoItem.vue';
 import StatisticTasks from './components/StatisticTasks.vue';
 import SearchTask from './components/SearchTask.vue';
+import SelectTask from './components/SelectTask.vue';
+import SelectTask from './components/SelectTask.vue';
+
 
 export default {
   name: 'App',
@@ -95,7 +99,9 @@ export default {
     TodoItem,
     // FormAdd,
     StatisticTasks,
-    SearchTask
+    SearchTask,
+    SelectTask,
+    SelectTask
 }
 }
 </script>
