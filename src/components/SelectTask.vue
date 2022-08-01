@@ -1,39 +1,37 @@
 <template>
     <div>
-        <div>
-        <input type="radio" id="all" value="all" v-model="picked">
+        <input type="radio" ref="all" id="all" name="filter" value="all" @click="filterAll">
         <label for="all">All</label>
-    </div>
-    <div>
-        <input type="radio" id="done" value="done" v-model="picked">
+
+        <input type="radio" ref="done" id="done" name="filter" value="done" @click="filterDone">
         <label for="done">Done</label>
-    </div>
-    <div>
-        <input type="radio" id="inOrder" value="inOrder" v-model="picked">
+
+        <input type="radio" ref="inOrder" id="inOrder" name="filter" value="inOrder" @click="filterInOrder">
         <label for="inOrder">In Order</label>
-    </div>
+
     </div>
 </template>
 
 <script>
 
 export default {
-    props: ["todoItems"],
+    props: ["todoItems", "filterAll", "filterDone", "filterInOrder"],
+    data() {
+        return {
+            picked: ""
+        }
+    },
+    methods: {
+        
+    }
 
 }
 </script>
 
 <style scoped>
-.searchTask {
+input {
     margin-left: 20px;
-}
-
-.showTask {
-    margin-left: 20px;
-    padding: 0;
-}
-
-.showTask__item {
-    list-style: none;
+    margin-bottom: 20px;
+    margin-right: 5px;
 }
 </style>

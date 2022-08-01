@@ -1,19 +1,28 @@
 <template>
   <div id="app">
     <p class="message">{{ message }}</p>
+
     <StatisticTasks
       v-bind:todoItems="todoItems"
       v-bind:complTask="completedTask"
       v-bind:allTask="allTask"
       v-bind:percentComplete="percentComplete"
     ></StatisticTasks>
-    <SelectTask></SelectTask>
+
+    <SelectTask
+      v-bind:todoItems="todoItems"
+      v-bind:filterAll="filterAll"
+      v-bind:filterDone="filterDone"
+      v-bind:filterInOrder="filterInOrder"
+    ></SelectTask>
+
     <SearchTask
       v-bind:todoItems="todoItems"
     ></SearchTask>
+
     <ul class="todo-btns">
       <TodoItem 
-        v-for="todo in todoItems" 
+        v-for="todo in todos" 
         v-bind:key="todo.id" 
         v-bind:id="todo.id" 
         v-bind:text="todo.text"
@@ -65,6 +74,7 @@ export default {
         { id: 4, text: 'task 4', done: false },
         { id: 5, text: 'task 5', done: false },
       ],
+      todos: [],
       addTaskText: ""
     }
   },
@@ -76,8 +86,32 @@ export default {
         done: false
       });
     },
-    todos() {
+    filterAll() {
+      this.todos = [];
+      for (let todo of this.todoItems) {
+        // console.log(todo);
+        this.todos.push(todo);
+      }
+    },
 
+    filterDone() {
+      this.todos = [];
+      for (let todo of this.todoItems) {
+        if (todo.done) {
+          // console.log(todo);
+        this.todos.push(todo);
+        }
+      }
+    },
+
+    filterInOrder() {
+      this.todos = [];
+      for (let todo of this.todoItems) {
+        if (!todo.done) {
+          // console.log(todo);
+        this.todos.push(todo);
+        }
+      }
     }
   },
   computed: {
@@ -95,11 +129,11 @@ export default {
     },
   },
   components: {
+    SelectTask,
     TodoItem,
     // FormAdd,
     StatisticTasks,
     SearchTask,
-    SelectTask,
 }
 }
 </script>
