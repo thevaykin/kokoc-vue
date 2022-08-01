@@ -1,5 +1,6 @@
 <template>
     <div>
+        <div>
         <input type="radio" id="all" value="all" v-model="picked">
         <label for="all">All</label>
     </div>
@@ -10,6 +11,7 @@
     <div>
         <input type="radio" id="inOrder" value="inOrder" v-model="picked">
         <label for="inOrder">In Order</label>
+    </div>
     </div>
 </template>
 

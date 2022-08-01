@@ -51,7 +51,6 @@ import TodoItem from './components/TodoItem.vue';
 import StatisticTasks from './components/StatisticTasks.vue';
 import SearchTask from './components/SearchTask.vue';
 import SelectTask from './components/SelectTask.vue';
-import SelectTask from './components/SelectTask.vue';
 
 
 export default {
@@ -101,7 +100,6 @@ export default {
     StatisticTasks,
     SearchTask,
     SelectTask,
-    SelectTask
 }
 }
 </script>
