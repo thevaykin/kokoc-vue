@@ -1,6 +1,12 @@
 <template>
   <div id="app">
-    {{ message }}
+    <p class="message">{{ message }}</p>
+    <StatisticTasks
+      v-bind:todoItems="todoItems"
+      v-bind:complTask="completedTask"
+      v-bind:allTask="allTask"
+      v-bind:percentComplete="percentComplete"
+    ></StatisticTasks>
     <ul class="todo-btns">
       <TodoItem 
         v-for="todo in todoItems" 
@@ -38,7 +44,7 @@
 
 <script>
 import TodoItem from './components/TodoItem.vue';
-// import FormAdd from './components/FormAdd.vue';
+import StatisticTasks from './components/StatisticTasks.vue';
 
 export default {
   name: 'App',
@@ -64,10 +70,25 @@ export default {
       });
     }
   },
+  computed: {
+    completedTask() {
+      let compltask = this.todoItems.filter(doneItems=> doneItems.done).length;
+      return compltask;
+    },
+    allTask() {
+      let allTask = this.todoItems.length;
+      return allTask;
+    },
+    percentComplete() {
+      let percentComplete = this.todoItems.filter(doneItems=> doneItems.done).length/this.todoItems.length*100;
+      return percentComplete.toFixed(1);
+    },
+  },
   components: {
     TodoItem,
-    // FormAdd
-  }
+    // FormAdd,
+    StatisticTasks,
+}
 }
 </script>
 
@@ -78,6 +99,10 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   margin-top: 40px;
+}
+
+.message {
+  margin-left: 20px;
 }
 
 .todo-btns {
