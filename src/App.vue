@@ -1,7 +1,12 @@
 <template>
   <div id="app">
     <p class="message">{{ message }}</p>
-
+    <p 
+    class="checkTask" 
+    v-if="allTask === 0"
+    >
+    Please add new task
+    </p>
     <StatisticTasks
       v-bind:todoItems="todoItems"
       v-bind:complTask="completedTask"
@@ -68,11 +73,11 @@ export default {
     return {
       message: 'Hello from Vue App',
       todoItems: [
-        { id: 1, text: 'task 1', done: false },
-        { id: 2, text: 'task 2', done: false },
-        { id: 3, text: 'task 3', done: true },
-        { id: 4, text: 'task 4', done: false },
-        { id: 5, text: 'task 5', done: false },
+        // { id: 1, text: 'task 1', done: false },
+        // { id: 2, text: 'task 2', done: false },
+        // { id: 3, text: 'task 3', done: true },
+        // { id: 4, text: 'task 4', done: false },
+        // { id: 5, text: 'task 5', done: false },
       ],
       todos: [],
       addTaskText: ""
@@ -112,7 +117,7 @@ export default {
         this.todos.push(todo);
         }
       }
-    }
+    },
   },
   computed: {
     completedTask() {
@@ -156,6 +161,10 @@ export default {
 }
 
 .form-add__input {
+  margin-left: 20px;
+}
+
+.checkTask {
   margin-left: 20px;
 }
 </style>
