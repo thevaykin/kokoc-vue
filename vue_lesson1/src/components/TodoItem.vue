@@ -3,6 +3,8 @@
     <button 
       class="todoItem__btn" 
       v-bind:class="done ? 'btn-success' : 'btn-secondary'"
+      v-bind:id="id+10"
+      @click="doneTask"
     >
     {{this.done ? "completed" : "in order"}}
     </button>
@@ -19,7 +21,8 @@
 <script>
 
 export default {
-  props: ["id", "text", "done", "removeTask", "editTask"],
+  props: ["id", "text", "done", "removeTask", "editTask", "doneTask"],
+
 }
 </script>
 

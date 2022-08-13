@@ -14,7 +14,7 @@
 
     <ul class="todo-btns">
       <TodoItem v-for="todo in todos" v-bind:key="todo.id" v-bind:id="todo.id" v-bind:text="todo.text"
-        v-bind:done="todo.done" v-bind:removeTask="removeTask" v-bind:editTask="editTask"></TodoItem>
+        v-bind:done="todo.done" v-bind:removeTask="removeTask" v-bind:editTask="editTask" v-bind:doneTask="doneTask"></TodoItem>
     </ul>
 
     <!-- <FormAdd
@@ -52,6 +52,7 @@ export default {
       todos: [],
       addTaskText: "",
       editClickCheck: false,
+      refresh: 0
     }
   },
   mounted() {
@@ -67,13 +68,20 @@ export default {
     },
   },
   methods: {
+    doneTask(e) {
+      this.todoItems.filter(todo => todo.id+10 == e.target.id)[0].done = !this.todoItems.filter(todo => todo.id+10 == e.target.id)[0].done;
+    },
+
     addTask() {
       this.todoItems.push({
         id: this.todoItems.length + 1,
         text: this.addTaskText,
         done: false
       });
+      this.addTaskText='';
+      this.filterAll();
     },
+
     filterAll() {
       this.todos = [];
       for (let todo of this.todoItems) {
@@ -125,7 +133,7 @@ export default {
       let editFormText = document.createElement('input');
       editFormText.value = editedTaskText;
 
-      if(this.editClickCheck == true) {
+      if (this.editClickCheck == true) {
         targetElement.childNodes[0].style.display = 'none';
         targetElement.appendChild(editFormText);
       }
@@ -133,9 +141,9 @@ export default {
       if (this.editClickCheck == false) {
         this.todoItems.filter((todo) => todo.id == e.target.id)[0].text = editFormText.value
         targetElement.childNodes[0].style.display = 'inline'
-        if(editFormText.value == editedTaskText) {
+        if (editFormText.value == editedTaskText) {
           targetElement.childNodes[1].remove();
-        } 
+        }
       }
 
       editFormText.onblur = () => {
@@ -144,7 +152,7 @@ export default {
         editFormText.remove();
         this.editClickCheck == false
       }
-    
+
     }
   },
   computed: {

@@ -1,35 +1,36 @@
 <template>
     <div>
-        <input type="radio" ref="all" id="all" name="filter" value="all" @click="filterAll" checked>
-        <label for="all">All</label>
+        <button @click="filterAll" class="btn-warning" id="active" v-bind:clicked="clicked()" @load="clicked">
+            All
+        </button>
 
-        <input type="radio" ref="done" id="done" name="filter" value="done" @click="filterDone">
-        <label for="done">Done</label>
+        <button @click="filterDone" class="btn-warning">
+            Done
+        </button>
 
-        <input type="radio" ref="inOrder" id="inOrder" name="filter" value="inOrder" @click="filterInOrder">
-        <label for="inOrder">In Order</label>
-
+        <button @click="filterInOrder" class="btn-warning">
+            InOrder
+        </button>
     </div>
 </template>
 
 <script>
 
 export default {
-    props: ["todoItems", "filterAll", "filterDone", "filterInOrder"],
-    data() {
-        return {
-            picked: ""
-        }
-    },
+    props: ['filterAll', 'filterDone', 'filterInOrder'],
     methods: {
-        
+        clicked() {
+            document.addEventListener("DOMContentLoaded", () => {
+                document.getElementById('active').click()
+            });
+        }
     }
 
 }
 </script>
 
 <style scoped>
-input {
+button {
     margin-left: 20px;
     margin-bottom: 20px;
     margin-right: 5px;
