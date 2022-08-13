@@ -125,7 +125,6 @@ export default {
       let editFormText = document.createElement('input');
       editFormText.value = editedTaskText;
 
-      
       if(this.editClickCheck == true) {
         targetElement.childNodes[0].style.display = 'none';
         targetElement.appendChild(editFormText);
@@ -136,7 +135,7 @@ export default {
         targetElement.childNodes[0].style.display = 'inline'
         if(editFormText.value == editedTaskText) {
           targetElement.childNodes[1].remove();
-        }
+        } 
       }
 
       editFormText.onblur = () => {
