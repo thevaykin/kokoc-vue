@@ -1,61 +1,29 @@
 <template>
   <div id="app">
     <p class="message">{{ message }}</p>
-    <p 
-    class="checkTask" 
-    v-if="allTask === 0"
-    >
-    Please add new task
+    <p class="checkTask" v-if="allTask === 0">
+      Please add new task
     </p>
-    <StatisticTasks
-      v-bind:todoItems="todoItems"
-      v-bind:complTask="completedTask"
-      v-bind:allTask="allTask"
-      v-bind:percentComplete="percentComplete"
-    ></StatisticTasks>
+    <StatisticTasks v-bind:todoItems="todoItems" v-bind:complTask="completedTask" v-bind:allTask="allTask"
+      v-bind:percentComplete="percentComplete"></StatisticTasks>
 
-    <SelectTask
-      v-bind:todoItems="todoItems"
-      v-bind:filterAll="filterAll"
-      v-bind:filterDone="filterDone"
-      v-bind:filterInOrder="filterInOrder"
-    ></SelectTask>
+    <SelectTask v-bind:todoItems="todoItems" v-bind:filterAll="filterAll" v-bind:filterDone="filterDone"
+      v-bind:filterInOrder="filterInOrder"></SelectTask>
 
-    <SearchTask
-      v-bind:todoItems="todoItems"
-    ></SearchTask>
+    <SearchTask v-bind:todoItems="todoItems"></SearchTask>
 
     <ul class="todo-btns">
-      <TodoItem 
-        v-for="todo in todos" 
-        v-bind:key="todo.id" 
-        v-bind:id="todo.id" 
-        v-bind:text="todo.text"
-        v-bind:done="todo.done"
-        v-bind:removeTask="removeTask"
-        v-bind:editTask="editTask"
-      ></TodoItem>
+      <TodoItem v-for="todo in todos" v-bind:key="todo.id" v-bind:id="todo.id" v-bind:text="todo.text"
+        v-bind:done="todo.done" v-bind:removeTask="removeTask" v-bind:editTask="editTask"></TodoItem>
     </ul>
 
     <!-- <FormAdd
       v-bind:todoItems="todoItems"
     ></FormAdd> -->
-    <form class="form-add" 
-      v-on:submit.prevent
-    >
-        <input 
-        type="text" 
-        class="form-add__input"
-        v-model.trim="addTaskText" 
-        placeholder="Add new task"
-      >
+    <form class="form-add" v-on:submit.prevent>
+      <input type="text" class="form-add__input" v-model.trim="addTaskText" placeholder="Add new task">
 
-      <button 
-        type="submit" 
-        v-bind:disabled="addTaskText==''"
-        class="form-add__btn" 
-        v-on:click="addTask"
-      >
+      <button type="submit" v-bind:disabled="addTaskText == ''" class="form-add__btn" v-on:click="addTask">
         Add
       </button>
     </form>
@@ -83,9 +51,20 @@ export default {
       ],
       todos: [],
       addTaskText: "",
-      refreshToken: 1,
       editClickCheck: false,
     }
+  },
+  mounted() {
+    if (localStorage.getItem('todoItems'))
+      this.todoItems = JSON.parse(localStorage.getItem('todoItems'));
+  },
+  watch: {
+    todoItems: {
+      handler() {
+        localStorage.setItem('todoItems', JSON.stringify(this.todoItems));
+      },
+      deep: true,
+    },
   },
   methods: {
     addTask() {
@@ -108,7 +87,7 @@ export default {
       for (let todo of this.todoItems) {
         if (todo.done) {
           // console.log(todo);
-        this.todos.push(todo);
+          this.todos.push(todo);
         }
       }
     },
@@ -118,7 +97,7 @@ export default {
       for (let todo of this.todoItems) {
         if (!todo.done) {
           // console.log(todo);
-        this.todos.push(todo);
+          this.todos.push(todo);
         }
       }
     },
@@ -126,12 +105,12 @@ export default {
     removeTask(e) {
       // console.log(this.todoItems);
       (e.target.parentNode).parentNode.remove();
-      this.todoItems.splice(e.target.id-1, 1);
+      this.todoItems.splice(e.target.id - 1, 1);
 
       //делаю перезапись id для элементов todoItems
       //т.к. они не изменяются динамически
       let counterId = 1;
-      for(let todo of this.todoItems) {
+      for (let todo of this.todoItems) {
         todo.id = counterId;
         counterId++;
       }
@@ -140,25 +119,38 @@ export default {
 
     editTask(e) {
       this.editClickCheck = !this.editClickCheck; //нажата ли кнопка или нет
+      console.log(this.editClickCheck)
       let targetElement = (e.target.parentNode).parentNode.childNodes[1];
-      let editedTaskText = targetElement.innerText;
+      let editedTaskText = targetElement.childNodes[0].innerText;
       let editFormText = document.createElement('input');
       editFormText.value = editedTaskText;
-      targetElement.innerText = '';
-      targetElement.appendChild(editFormText);
+
+      
+      if(this.editClickCheck == true) {
+        targetElement.childNodes[0].style.display = 'none';
+        targetElement.appendChild(editFormText);
+      }
+
+      if (this.editClickCheck == false) {
+        this.todoItems.filter((todo) => todo.id == e.target.id)[0].text = editFormText.value
+        targetElement.childNodes[0].style.display = 'inline'
+        if(editFormText.value == editedTaskText) {
+          targetElement.childNodes[1].remove();
+        }
+      }
 
       editFormText.onblur = () => {
-        targetElement.innerText = editFormText.value;
+        this.todoItems.filter((todo) => todo.id == e.target.id)[0].text = editFormText.value
+        targetElement.childNodes[0].style.display = 'inline'
+        editFormText.remove();
+        this.editClickCheck == false
       }
-
-      if (!this.editClickCheck) {
-        targetElement.innerText = editFormText.value;
-      }
+    
     }
   },
   computed: {
     completedTask() {
-      let compltask = this.todoItems.filter(doneItems=> doneItems.done).length;
+      let compltask = this.todoItems.filter(doneItems => doneItems.done).length;
       return compltask;
     },
     allTask() {
@@ -166,7 +158,7 @@ export default {
       return allTask;
     },
     percentComplete() {
-      let percentComplete = this.todoItems.filter(doneItems=> doneItems.done).length/this.todoItems.length*100;
+      let percentComplete = this.todoItems.filter(doneItems => doneItems.done).length / this.todoItems.length * 100;
       return percentComplete.toFixed(1);
     },
   },
@@ -176,7 +168,7 @@ export default {
     // FormAdd,
     StatisticTasks,
     SearchTask,
-}
+  }
 }
 </script>
 
