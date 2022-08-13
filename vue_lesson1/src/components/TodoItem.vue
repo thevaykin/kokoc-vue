@@ -9,7 +9,7 @@
     <span class="task-number" v-text="text"></span>
     <div class="todoItem__btn-editing">
       <button class="todoItem__btn-remove btn-info" v-bind:id="id" @click="removeTask">Remove</button>
-      <button class="todoItem__btn-edit btn-info">Edit</button>
+      <button class="todoItem__btn-edit btn-info" v-bind:id="id" @click="editTask">Edit</button>
     </div>
   </li>
 </template>
@@ -17,7 +17,7 @@
 <script>
 
 export default {
-  props: ["id", "text", "done", "removeTask"],
+  props: ["id", "text", "done", "removeTask", "editTask"],
 }
 </script>
 

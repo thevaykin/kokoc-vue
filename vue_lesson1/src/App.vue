@@ -33,6 +33,7 @@
         v-bind:text="todo.text"
         v-bind:done="todo.done"
         v-bind:removeTask="removeTask"
+        v-bind:editTask="editTask"
       ></TodoItem>
     </ul>
 
@@ -83,6 +84,7 @@ export default {
       todos: [],
       addTaskText: "",
       refreshToken: 1,
+      editClickCheck: false,
     }
   },
   methods: {
@@ -133,9 +135,26 @@ export default {
         todo.id = counterId;
         counterId++;
       }
-
       // console.log(this.todoItems);
     },
+
+    editTask(e) {
+      this.editClickCheck = !this.editClickCheck; //нажата ли кнопка или нет
+      let targetElement = (e.target.parentNode).parentNode.childNodes[1];
+      let editedTaskText = targetElement.innerText;
+      let editFormText = document.createElement('input');
+      editFormText.value = editedTaskText;
+      targetElement.innerText = '';
+      targetElement.appendChild(editFormText);
+
+      editFormText.onblur = () => {
+        targetElement.innerText = editFormText.value;
+      }
+
+      if (!this.editClickCheck) {
+        targetElement.innerText = editFormText.value;
+      }
+    }
   },
   computed: {
     completedTask() {
