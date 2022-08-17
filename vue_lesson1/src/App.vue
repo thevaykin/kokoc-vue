@@ -31,6 +31,8 @@
     </form>
     <ChangeTag class=change-tag tag="button">
     </ChangeTag>
+    <CurrencyFilter>
+    </CurrencyFilter>
   </div>
 </template>
 
@@ -40,6 +42,7 @@ import StatisticTasks from './components/StatisticTasks.vue';
 import SearchTask from './components/SearchTask.vue';
 import SelectTask from './components/SelectTask.vue';
 import ChangeTag from './components/ChangeTag.vue'
+import CurrencyFilter from './components/CurrencyFilter.vue';
 
 
 export default {
@@ -191,7 +194,7 @@ export default {
     StatisticTasks,
     SearchTask,
     ChangeTag,
-
+    CurrencyFilter
 }
 }
 </script>
