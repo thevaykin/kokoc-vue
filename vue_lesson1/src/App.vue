@@ -41,7 +41,7 @@ import TodoItem from './components/TodoItem.vue';
 import StatisticTasks from './components/StatisticTasks.vue';
 import SearchTask from './components/SearchTask.vue';
 import SelectTask from './components/SelectTask.vue';
-import ChangeTag from './components/ChangeTag.vue'
+// import ChangeTag from './components/ChangeTag.vue'
 import CurrencyFilter from './components/CurrencyFilter.vue';
 import { liveCycle } from './mixins/liveCycle';
 
@@ -196,7 +196,7 @@ export default {
     // FormAdd,
     StatisticTasks,
     SearchTask,
-    ChangeTag,
+    // ChangeTag,
     CurrencyFilter
 }
 }

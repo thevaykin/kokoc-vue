@@ -27,7 +27,7 @@ export default {
   props: ["id", "text", "done", "removeTask", "editTask", "doneTask"],
   data() {
     return {
-      name: 'todoItem',
+      name: 'todoItems', 
     }
   }
 }
