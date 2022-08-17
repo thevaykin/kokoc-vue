@@ -29,6 +29,8 @@
         Add
       </button>
     </form>
+    <ChangeTag class=change-tag tag="button">
+    </ChangeTag>
   </div>
 </template>
 
@@ -37,6 +39,7 @@ import TodoItem from './components/TodoItem.vue';
 import StatisticTasks from './components/StatisticTasks.vue';
 import SearchTask from './components/SearchTask.vue';
 import SelectTask from './components/SelectTask.vue';
+import ChangeTag from './components/ChangeTag.vue'
 
 
 export default {
@@ -187,7 +190,9 @@ export default {
     // FormAdd,
     StatisticTasks,
     SearchTask,
-  }
+    ChangeTag,
+
+}
 }
 </script>
 
@@ -215,5 +220,9 @@ export default {
 
 .checkTask {
   margin-left: 20px;
+}
+
+.change-tag {
+  margin: 20px;
 }
 </style>
