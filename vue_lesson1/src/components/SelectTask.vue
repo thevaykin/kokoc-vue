@@ -15,9 +15,17 @@
 </template>
 
 <script>
+import { liveCycle } from '@/mixins/liveCycle';
+
 
 export default {
+    mixins: [liveCycle],
     props: ['filterAll', 'filterDone', 'filterInOrder'],
+    data() {
+        return {
+            name: 'selectTask',
+        }
+    },
     methods: {
         clicked() {
             document.addEventListener("DOMContentLoaded", () => {

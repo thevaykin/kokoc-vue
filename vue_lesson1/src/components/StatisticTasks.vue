@@ -22,9 +22,12 @@
 </template>
 
 <script>
+import { liveCycle } from '@/mixins/liveCycle';
+
 
 export default {
-    props: ["todoItems", "complTask", "allTask", "percentComplete"]
+    mixins: [liveCycle],
+    props: ["todoItems", "complTask", "allTask", "percentComplete"],
     // {
     //     todoItems: Array,
     //     complTask: Number,
@@ -32,6 +35,11 @@ export default {
     //     percentComplete: Number
 
     // }
+    data() {
+        return {
+            name: 'statisticTask',
+        }
+    }
 }
 </script>
 

@@ -6,9 +6,13 @@
 </template>
 
 <script>
+import { liveCycle } from '@/mixins/liveCycle';
+
     export default {
+        mixins: [liveCycle],
         data() {
             return {
+                name: 'currencyFilter',
                 number: 10000,
             }
         },

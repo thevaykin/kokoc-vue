@@ -43,12 +43,15 @@ import SearchTask from './components/SearchTask.vue';
 import SelectTask from './components/SelectTask.vue';
 import ChangeTag from './components/ChangeTag.vue'
 import CurrencyFilter from './components/CurrencyFilter.vue';
+import { liveCycle } from './mixins/liveCycle';
 
 
 export default {
   name: 'App',
+  mixins: [liveCycle],
   data() {
     return {
+      name: 'mainComponent',
       message: 'Hello from Vue App',
       todoItems: [
         // { id: 1, text: 'task 1', done: false },
