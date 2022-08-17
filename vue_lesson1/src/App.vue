@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <p class="message">{{ message }}</p>
+    <h2 class="message" v-color:color="'white'" v-color:background="'green'">{{ message }}</h2>
     <p class="checkTask" v-if="allTask === 0">
       Please add new task
     </p>
@@ -14,19 +14,25 @@
 
     <ul class="todo-btns">
       <TodoItem v-for="todo in todos" v-bind:key="todo.id" v-bind:id="todo.id" v-bind:text="todo.text"
-        v-bind:done="todo.done" v-bind:removeTask="removeTask" v-bind:editTask="editTask" v-bind:doneTask="doneTask"></TodoItem>
+        v-bind:done="todo.done" v-bind:removeTask="removeTask" v-bind:editTask="editTask" v-bind:doneTask="doneTask">
+      </TodoItem>
     </ul>
 
     <!-- <FormAdd
       v-bind:todoItems="todoItems"
     ></FormAdd> -->
     <form class="form-add" v-on:submit.prevent>
-      <input type="text" class="form-add__input" v-model.trim="addTaskText" placeholder="Add new task">
+      <input type="text" class="form-add__input" v-model.trim="addTaskText" v-blur="checkAdding"
+        placeholder="Add new task">
 
       <button type="submit" v-bind:disabled="addTaskText == ''" class="form-add__btn" v-on:click="addTask">
         Add
       </button>
     </form>
+    <ChangeTag class=change-tag tag="button">
+    </ChangeTag>
+    <CurrencyFilter>
+    </CurrencyFilter>
   </div>
 </template>
 
@@ -35,12 +41,17 @@ import TodoItem from './components/TodoItem.vue';
 import StatisticTasks from './components/StatisticTasks.vue';
 import SearchTask from './components/SearchTask.vue';
 import SelectTask from './components/SelectTask.vue';
+// import ChangeTag from './components/ChangeTag.vue'
+import CurrencyFilter from './components/CurrencyFilter.vue';
+import { liveCycle } from './mixins/liveCycle';
 
 
 export default {
   name: 'App',
+  mixins: [liveCycle],
   data() {
     return {
+      name: 'mainComponent',
       message: 'Hello from Vue App',
       todoItems: [
         // { id: 1, text: 'task 1', done: false },
@@ -69,7 +80,7 @@ export default {
   },
   methods: {
     doneTask(e) {
-      this.todoItems.filter(todo => todo.id+10 == e.target.id)[0].done = !this.todoItems.filter(todo => todo.id+10 == e.target.id)[0].done;
+      this.todoItems.filter(todo => todo.id + 10 == e.target.id)[0].done = !this.todoItems.filter(todo => todo.id + 10 == e.target.id)[0].done;
     },
 
     addTask() {
@@ -78,7 +89,7 @@ export default {
         text: this.addTaskText,
         done: false
       });
-      this.addTaskText='';
+      this.addTaskText = '';
       this.filterAll();
     },
 
@@ -153,6 +164,16 @@ export default {
         this.editClickCheck == false
       }
 
+    },
+
+    checkAdding() {
+        let check = confirm('Вы уверены, что хотите добавить задачу?');
+        if (check) {
+          this.addTask();
+        } else {
+          document.querySelector('.form-add__input').value = '';
+          return;
+        }
     }
   },
   computed: {
@@ -175,7 +196,9 @@ export default {
     // FormAdd,
     StatisticTasks,
     SearchTask,
-  }
+    // ChangeTag,
+    CurrencyFilter
+}
 }
 </script>
 
@@ -190,6 +213,7 @@ export default {
 
 .message {
   margin-left: 20px;
+  width: 20%;
 }
 
 .todo-btns {
@@ -202,5 +226,9 @@ export default {
 
 .checkTask {
   margin-left: 20px;
+}
+
+.change-tag {
+  margin: 20px;
 }
 </style>

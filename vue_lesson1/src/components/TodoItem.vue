@@ -19,10 +19,17 @@
 </template>
 
 <script>
+import { liveCycle } from '@/mixins/liveCycle';
+
 
 export default {
+  mixins: [liveCycle],
   props: ["id", "text", "done", "removeTask", "editTask", "doneTask"],
-
+  data() {
+    return {
+      name: 'todoItems', 
+    }
+  }
 }
 </script>
 

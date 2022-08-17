@@ -9,11 +9,15 @@
 </template>
 
 <script>
+import { liveCycle } from '@/mixins/liveCycle';
+
 
 export default {
+    mixins: [liveCycle],
     props: ["todoItems"],
     data() {
         return {
+            name: 'searchTask',
             searchText: 'task 1'
         }
     },
