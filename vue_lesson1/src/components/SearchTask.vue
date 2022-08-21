@@ -23,6 +23,7 @@ export default {
     },
     methods: {
         searching() {
+            
             return this.todoItems.filter((task) => {
                 return task.text.toLowerCase().includes(this.searchText.toLowerCase());
             });
