@@ -30,7 +30,7 @@ export default {
         });
 
         Vue.filter('currency', (value) => {
-            return String(value) + ' руб'
+            return Number(value).toLocaleString() + ' руб'
         });
     }
 }

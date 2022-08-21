@@ -10,11 +10,13 @@
     <SelectTask v-bind:todoItems="todoItems" v-bind:filterAll="filterAll" v-bind:filterDone="filterDone"
       v-bind:filterInOrder="filterInOrder"></SelectTask>
 
-    <SearchTask v-bind:todoItems="todoItems"></SearchTask>
+    <!-- <SearchTask v-bind:todoItems.sync="todoItems"></SearchTask> -->
+    <input type="search" class="searchTask" placeholder="search" v-model="searchText">
 
     <ul class="todo-btns">
-      <TodoItem v-for="todo in todos" v-bind:key="todo.id" v-bind:id="todo.id" v-bind:text="todo.text"
-        v-bind:done="todo.done" v-bind:removeTask="removeTask" v-bind:editTask="editTask" v-bind:doneTask="doneTask">
+      <TodoItem v-for="todo of searching()" v-bind:key="todo.id" v-bind:id="todo.id" v-bind:text="todo.text"
+        v-bind:done="todo.done" v-bind:removeTask="removeTask" v-bind:editTask="editTask" v-bind:doneTask="doneTask"
+        v-bind:refresh="refresh">
       </TodoItem>
     </ul>
 
@@ -39,11 +41,12 @@
 <script>
 import TodoItem from './components/TodoItem.vue';
 import StatisticTasks from './components/StatisticTasks.vue';
-import SearchTask from './components/SearchTask.vue';
+// import SearchTask from './components/SearchTask.vue';
 import SelectTask from './components/SelectTask.vue';
 // import ChangeTag from './components/ChangeTag.vue'
 import CurrencyFilter from './components/CurrencyFilter.vue';
 import { liveCycle } from './mixins/liveCycle';
+
 
 
 export default {
@@ -63,7 +66,8 @@ export default {
       todos: [],
       addTaskText: "",
       editClickCheck: false,
-      refresh: 0
+      refresh: 0,
+      searchText: ''
     }
   },
   mounted() {
@@ -79,6 +83,11 @@ export default {
     },
   },
   methods: {
+    searching() {
+      return this.todos.filter((task) => {
+        return task.text.toLowerCase().includes(this.searchText.toLowerCase());
+      });
+    },
     doneTask(e) {
       this.todoItems.filter(todo => todo.id + 10 == e.target.id)[0].done = !this.todoItems.filter(todo => todo.id + 10 == e.target.id)[0].done;
     },
@@ -167,13 +176,7 @@ export default {
     },
 
     checkAdding() {
-        let check = confirm('Вы уверены, что хотите добавить задачу?');
-        if (check) {
-          this.addTask();
-        } else {
-          document.querySelector('.form-add__input').value = '';
-          return;
-        }
+      this.addTask();
     }
   },
   computed: {
@@ -195,10 +198,10 @@ export default {
     TodoItem,
     // FormAdd,
     StatisticTasks,
-    SearchTask,
+    // SearchTask,
     // ChangeTag,
-    CurrencyFilter
-}
+    CurrencyFilter,
+  }
 }
 </script>
 
@@ -229,6 +232,10 @@ export default {
 }
 
 .change-tag {
+  margin: 20px;
+}
+
+.searchTask {
   margin: 20px;
 }
 </style>
